@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Voz del Pueblo | Director: Luis Eduardo Leyva Roco</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #070d18;
+      --bg-card: #0e1a2f;
+      --border-card: #1c3258;
+      --red-news: #e50914;
+      --red-glow: rgba(229, 9, 20, 0.4);
+      --yellow-news: #ffcc00;
+      --blue-accent: #0077ff;
+      --text-white: #ffffff;
+      --text-muted: #9bb2cf;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(180deg, #101c33 0%, #070d18 100%);
+      border-bottom: 3px solid var(--red-news);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+
+    .header-content {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mic-icon {
+      background: var(--red-news);
+      color: white;
+      font-size: 1.8rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--red-glow);
+    }
+
+    .brand-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 0.85rem;
+      color: var(--yellow-news);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .live-badge {
+      background-color: var(--red-news);
+      color: white;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 1.5px;
+      animation: pulse 1.6s infinite ease-in-out;
+    }
+
+    .live-dot {
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+
+    /* BARRA DE CONTROL */
+    .controls-bar {
+      max-width: 1300px;
+      margin: 1.5rem auto 0.5rem auto;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .director-badge {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      border-left: 3px solid var(--blue-accent);
+      padding-left: 10px;
+    }
+    .director-badge strong {
+      color: #fff;
+    }
+
+    .view-toggles {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-toggle {
+      background: #14243f;
+      color: #fff;
+      border: 1px solid var(--border-card);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-toggle.active, .btn-toggle:hover {
+      background: var(--blue-accent);
+      border-color: var(--blue-accent);
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    main {
+      max-width: 1300px;
+      margin: 1rem auto 3rem auto;
+      padding: 0 1.5rem;
+      width: 100%;
+      flex-grow: 1;
+    }
+
+    /* GRILLA */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 25px;
+    }
+
+    .news-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 119, 255, 0.25);
+      border-color: var(--blue-accent);
+    }
+
+    .card-header-bar {
+      background: #091322;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #14284b;
+    }
+
+    .cara-number {
+      font-weight: 800;
+      font-size: 0.85rem;
+      background: var(--yellow-news);
+      color: #000;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .news-tag {
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: var(--red-news);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .image-container {
+      width: 100%;
+      height: 245px;
+      background: #050b14;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .image-container:hover img {
+      transform: scale(1.03);
+    }
+
+    .image-fallback {
+      display: none;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      padding: 20px;
+      text-align: center;
+      background: linear-gradient(145deg, #0d1b32, #070e1b);
+    }
+
+    .zoom-hint {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .card-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-grow: 1;
+    }
+
+    .card-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .badge-alert {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-red { background: #b30006; color: #fff; }
+    .badge-orange { background: #e67e22; color: #fff; }
+    .badge-blue { background: #0066cc; color: #fff; }
+    .badge-green { background: #27ae60; color: #fff; }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .card-footer {
+      border-top: 1px solid var(--border-card);
+      padding: 12px 18px;
+      background: #091322;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #8da4c4;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(3, 7, 15, 0.95);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-content {
+      max-width: 94%;
+      max-height: 85vh;
+      border-radius: 8px;
+      box-shadow: 0 0 35px rgba(0,0,0,0.9);
+      border: 2px solid var(--border-card);
+      object-fit: contain;
+    }
+
+    .modal-caption {
+      margin-top: 15px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--yellow-news);
+      text-align: center;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 25px;
+      right: 30px;
+      font-size: 2.2rem;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .modal-close:hover { color: var(--red-news); }
+
+    /* FOOTER */
+    footer {
+      background: #060b14;
+      border-top: 1px solid var(--border-card);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .footer-director {
+      color: #fff;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .brand-title { font-size: 1.6rem; }
+      .header-content { justify-content: center; text-align: center; }
+      .controls-bar { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENCABEZADO -->
+  <header>
+    <div class="header-content">
+      <div class="logo-area">
+        <div class="mic-icon">🎙️</div>
+        <div>
+          <h1 class="brand-title">La Voz del Pueblo</h1>
+          <div class="brand-subtitle">EL PROGRAMA DEL PUEBLO • TRUJILLO, PERÚ</div>
+        </div>
+      </div>
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        EN VIVO
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTROLES -->
+  <div class="controls-bar">
+    <div class="director-badge">
+      Director: <strong>Luis Eduardo Leyva Roco</strong> | Trujillo - La Libertad
+    </div>
+    <div class="view-toggles">
+      <button class="btn-toggle active" onclick="filterCards('all', event)">Colección Completa</button>
+      <button class="btn-toggle" onclick="filterCards('noticias', event)">Solo Noticias</button>
+      <button class="btn-toggle" onclick="filterCards('sponsors', event)">Publicidad</button>
+    </div>
+  </div>
+
+  <!-- GRILLA ORDENADA SEGÚN TUS ARCHIVOS -->
+  <main>
+    <div class="cards-grid" id="cardsGrid">
+
+      <!-- CARA 1: Tu archivo es 8.jpeg -->
+      <article class="news-card" data-category="principal">
+        <div class="card-header-bar">
+          <span class="cara-number">CARA 1</span>
+          <span class="news-tag">PRESENTACIÓN OFICIAL</span>
+        </div>
+        <div class="image-container" onclick="openModalFromCard(this, 'CARA 1: Caretón Principal - La Voz del Pueblo')">
+          <img src="8.jpeg" data-file="8.jpeg" alt="Caretón Principal" onerror="handleImgError(this)" />
+          <div class="image-fallback">
+            <strong>⚠️ Archivo: 8.jpeg no encontrado</strong>
+          </div>
+          <span class="zoom-hint">🔍 Ampliar Lámina</span>
+        </div>
+        <div class="card-body">
+          <span class="badge-alert badge-blue">PORTADA OFICIAL</span>
+          <h2 class="card-title">Caretón Principal de Transmisión</h2>
+          <p class="card-desc">
+            Portada de apertura en vivo. Identificación de transmisión con micrófono oficial, créditos de Dirección para <strong>Luis Eduardo Leyva Roco</strong> y espacio para número WhatsApp de la comunidad (+51).
+          </p>
+        </div>
+        <div class="card-footer">
+          <span>📍 Trujillo • La Libertad</span>
+          <span>📲 Contacto Ciudadano</span>
+        </div>
+      </article>
+
+      <!-- CARA 2: Tu archivo es 4.jpeg -->
+      <article class="news-card" data-category="noticias">
+        <div class="card-header-bar">
+          <span class="cara-number">CARA 2</span>
+          <span class="news-tag">NOTICIA 1 • ALERTA SENAMHI</span>
+        </div>
+        <div class="image-container" onclick="openModalFromCard(this, 'CARA 2: Alerta Senamhi La Libertad - Noticia 1')">
+          <img src="4.jpeg" data-file="4.jpeg" alt="Alerta Senamhi La Libertad" onerror="handleImgError(this)" />
+          <div class="image-fallback">
+            <strong>⚠️ Archivo: 4.jpeg no encontrado</strong>
+          </div>
+          <span class="zoom-hint">🔍 Ampliar Lámina</span>
+        </div>
+        <div class="card-body">
+          <span class="badge-alert badge-orange">AVISO 412 • CALOR EXTREMO</span>
+          <h2 class="card-title">12 Provincias en Alerta por Calor</h2>
+          <p class="card-desc">
+            Aviso 412 válido del 14 al 16 de octubre. Calor extremo de 24 a 33°C. Trujillo con neblina (24°C), rachas de viento de 40 km/h, llovizna escasa (0.2–2 mm) y <strong>UV 11 Extremo</strong>.
+          </p>
+        </div>
+        <div class="card-footer">
+          <span>📅 14–16 Octubre</span>
+          <span>☀️ Protección UV 50+</span>
+        </div>
+      </article>
+
+      <!-- CARA 3: Tu archivo es 6.jpeg -->
+      <article class="news-card" data-category="noticias">
+        <div class="card-header-bar">
+          <span class="cara-number">CARA 3</span>
+          <span class="news-tag">NOTICIA 2 • PIURA EN ALERTA ROJA</span>
+        </div>
+        <div class="image-container" onclick="openModalFromCard(this, 'CARA 3: Piura en Alerta Roja - Noticia 2')">
+          <img src="6.jpeg" data-file="6.jpeg" alt="Piura en Alerta Roja" onerror="handleImgError(this)" />
+          <div class="image-fallback">
+            <strong>⚠️ Archivo: 6.jpeg no encontrado</strong>
+          </div>
+          <span class="zoom-hint">🔍 Ampliar Lámina</span>
+        </div>
+        <div class="card-body">
+          <span class="badge-alert badge-red">ALERTA ROJA INUNDACIONES</span>
+          <h2 class="card-title">Piura en Alerta Roja: Lluvia Extrema</h2>
+          <p class="card-desc">
+            Lluvias superiores a <strong>70 mm en la costa</strong> con alto riesgo de desbordes e inundaciones. Temperaturas de 26 a 35°C, drenajes colapsados y rachas de viento de 52 km/h.
+          </p>
+        </div>
+        <div class="card-footer">
+          <span>🌧️ Lluvia: 70 mm costa</span>
+          <span>⚠️ Viento: 52 km/h</span>
+        </div>
+      </article>
+
+      <!-- CARA 4: Tu archivo es 5.jpeg -->
+      <article class="news-card" data-category="noticias">
+        <div class="card-header-bar">
+          <span class="cara-number">CARA 4</span>
+          <span class="news-tag">NOTICIA 3 • LAMBAYEQUE BAJO LLUVIA</span>
+        </div>
+        <div class="image-container" onclick="openModalFromCard(this, 'CARA 4: Lambayeque Bajo Lluvia - Noticia 3')">
+          <img src="5.jpeg" data-file="5.jpeg" alt="Lambayeque Bajo Lluvia" onerror="handleImgError(this)" />
+          <div class="image-fallback">
+            <strong>⚠️ Archivo: 5.jpeg no encontrado</strong>
+          </div>
+          <span class="zoom-hint">🔍 Ampliar Lámina</span>
+        </div>
+        <div class="card-body">
+          <span class="badge-alert badge-red">RIESGO ALTO • COER ACTIVO</span>
+          <h2 class="card-title">Lambayeque Bajo Lluvia e Inundación</h2>
+          <p class="card-desc">
+            Chiclayo registra 26°C (máxima de 32°C). Lluvias de 20 mm generan huaicos en zonas altas, bloqueo de carreteras en Olmos y Motupe, y alerta de desborde en ríos Chancay y La Leche.
+          </p>
+        </div>
+        <div class="card-footer">
+          <span>🌊 Ríos Chancay y La Leche</span>
+          <span>🚨 Alerta COER</span>
+        </div>
+      </article>
+
+      <!-- CARA 5: Tu archivo es 7.jpeg -->
+      <article class="news-card" data-category="noticias">
+        <div class="card-header-bar">
+          <span class="cara-number">CARA 5</span>
+          <span class="news-tag">NOTICIA 4 • TUMBES INUNDADO</span>
+        </div>
+        <div class="image-container" onclick="openModalFromCard(this, 'CARA 5: Tumbes Inundado - Noticia 4')">
+          <img src="7.jpeg" data-file="7.jpeg" alt="Tumbes Inundado" onerror="handleImgError(this)" />
+          <div class="image-fallback">
+            <strong>⚠️ Archivo: 7.jpeg no encontrado</strong>
+          </div>
+          <span class="zoom-hint">🔍 Ampliar Lámina</span>
+        </div>
+        <div class="card-body">
+          <span class="badge-alert badge-orange">SENSACIÓN TÉRMICA 37°C</span>
+          <h2 class="card-title">Tumbes Inundado: Lluvias Fuertes</h2>
+          <p class="card-desc">
+            Lluvia extrema de <strong>70 mm por día</strong> desde la madrugada. Temperatura de 26°C con sensación térmica asfixiante de 37°C. Calles anegadas y despliegue de ayuda por Defensa Civil.
+          </p>
+        </div>
+        <div class="card-footer">
+          <span>📍 Frontera Norte</span>
+          <span>💧 70 mm/día</span>
+        </div>
+      </article>
+
+      <!-- CARA 6: Tu archivo es 1.jpeg -->
+      <article class="news-card" data-category="noticias">
+        <div class="card-header-bar">
+          <span class="cara-number">CARA 6</span>
+          <span class="news-tag">NOTICIA 5 • CAJAMARCA</span>
+        </div>
+        <div class="image-container" onclick="openModalFromCard(this, 'CARA 6: Cajamarca Ola de Calor y Granizo - Noticia 5')">
+          <img src="1.jpeg" data-file="1.jpeg" alt="Cajamarca Calor y Granizo" onerror="handleImgError(this)" />
+          <div class="image-fallback">
+            <strong>⚠️ Archivo: 1.jpeg no encontrado</strong>
+          </div>
+          <span class="zoom-hint">🔍 Ampliar Lámina</span>
+        </div>
+        <div class="card-body">
+          <span class="badge-alert badge-orange">CONTRASTE TÉRMICO Y DESLIZAMIENTOS</span>
+          <h2 class="card-title">Cajamarca: Ola de Calor y Granizo</h2>
+          <p class="card-desc">
+            Condiciones extremas: calor diurno de 22 a 33°C en valles y tormentas de nieve/granizo sobre los 2,800–4,000 msnm con 45 mm de lluvia. Alto riesgo de deslizamientos en carreteras.
+          </p>
+        </div>
+        <div class="card-footer">
+          <span>🏔️ Altura: 2800-4000 msnm</span>
+          <span>⚠️ Deslizamientos</span>
+        </div>
+      </article>
+
+      <!-- CARA 7: Tu archivo es 2.jpeg -->
+      <article class="news-card" data-category="noticias">
+        <div class="card-header-bar">
+          <span class="cara-number">CARA 7</span>
+          <span class="news-tag">NOTICIA 6 • PERÚ EN LLAMAS</span>
+        </div>
+        <div class="image-container" onclick="openModalFromCard(this, 'CARA 7: Perú en Llamas - Noticia 6')">
+          <img src="2.jpeg" data-file="2.jpeg" alt="Perú en Llamas" onerror="handleImgError(this)" />
+          <div class="image-fallback">
+            <strong>⚠️ Archivo: 2.jpeg no encontrado</strong>
+          </div>
+          <span class="zoom-hint">🔍 Ampliar Lámina</span>
+        </div>
+        <div class="card-body">
+          <span class="badge-alert badge-red">56 INCENDIOS • 14 REGIONES</span>
+          <h2 class="card-title">Perú en Llamas: Tragedia Forestal</h2>
+          <p class="card-desc">
+            Balance crítico con <strong>6 fallecidos</strong> y 16,000 hectáreas devoradas. Zonas más golpeadas: Cusco (7 incendios), Puno (6) y Apurímac (6). Respuesta aérea con FAP C-27J Spartan y helicópteros Mi-17.
+          </p>
+        </div>
+        <div class="card-footer">
+          <span>🔥 16,000 ha quemadas</span>
+          <span>✈️ Despliegue FAP y Ejército</span>
+        </div>
+      </article>
+
+      <!-- CARA 8: Tu archivo es 3.jpeg -->
+      <article class="news-card" data-category="noticias">
+        <div class="card-header-bar">
+          <span class="cara-number">CARA 8</span>
+          <span class="news-tag">NOTICIA 7 • TRUJILLO HOY</span>
+        </div>
+        <div class="image-container" onclick="openModalFromCard(this, 'CARA 8: Trujillo Hoy 14 Octubre - Noticia 7')">
+          <img src="3.jpeg" data-file="3.jpeg" alt="Trujillo Hoy" onerror="handleImgError(this)" />
+          <div class="image-fallback">
+            <strong>⚠️ Archivo: 3.jpeg no encontrado</strong>
+          </div>
+          <span class="zoom-hint">🔍 Ampliar Lámina</span>
+        </div>
+        <div class="card-body">
+          <span class="badge-alert badge-blue">REPORTE LOCAL</span>
+          <h2 class="card-title">Trujillo Hoy: Neblina y Alta Humedad</h2>
+          <p class="card-desc">
+            24°C con neblina, humedad del 84%, viento SE a 13 km/h. Máxima prevista de 28°C y llovizna AM. <strong>Índice UV 11 Nivel Extremo</strong>. Amanecer a las 5:53 y puesta de sol a las 6:10.
+          </p>
+        </div>
+        <div class="card-footer">
+          <span>💧 Humedad: 84%</span>
+          <span>💨 Viento SE: 13 km/h</span>
+        </div>
+      </article>
+
+      <!-- HOJA 9: Tu archivo es 9.jpeg -->
+      <article class="news-card" data-category="sponsors">
+        <div class="card-header-bar">
+          <span class="cara-number">HOJA 9</span>
+          <span class="news-tag">PUBLICIDAD OFICIAL</span>
+        </div>
+        <div class="image-container" onclick="openModalFromCard(this, 'Publicidad Hoja 9: Gastronomía y Seguridad')">
+          <img src="9.jpeg" data-file="9.jpeg" alt="Publicidad Hoja 9" onerror="handleImgError(this)" />
+          <div class="image-fallback">
+            <strong>⚠️ Archivo: 9.jpeg no encontrado</strong>
+          </div>
+          <span class="zoom-hint">🔍 Ampliar Lámina</span>
+        </div>
+        <div class="card-body">
+          <span class="badge-alert badge-green">GASTRONOMÍA Y SEGURIDAD</span>
+          <h2 class="card-title">El Maracucho Burger & CJJSAC</h2>
+          <p class="card-desc">
+            Hamburguesas y comida rápida en Casa Grande (Delivery: 918 588 162), Seguridad Privada CJJSAC Trujillo (912 000 659), Agua Fiel y Aniversario del Club de Tiro Casa Grande.
+          </p>
+        </div>
+        <div class="card-footer">
+          <span>🤝 Apoyo Comercial</span>
+          <span>📞 Contacto: 912 000 659</span>
+        </div>
+      </article>
+
+      <!-- HOJA 10: Tu archivo es 10.jpeg -->
+      <article class="news-card" data-category="sponsors">
+        <div class="card-header-bar">
+          <span class="cara-number">HOJA 10</span>
+          <span class="news-tag">AUSPICIADORES DESTACADOS</span>
+        </div>
+        <div class="image-container" onclick="openModalFromCard(this, 'Auspiciadores Oficiales: La Voz del Pueblo')">
+          <img src="10.jpeg" data-file="10.jpeg" alt="Auspiciadores Oficiales" onerror="handleImgError(this)" />
+          <div class="image-fallback">
+            <strong>⚠️ Archivo: 10.jpeg no encontrado</strong>
+          </div>
+          <span class="zoom-hint">🔍 Ampliar Lámina</span>
+        </div>
+        <div class="card-body">
+          <span class="badge-alert badge-green">ANIVERSARIO & AGUA SAN JOSÉ</span>
+          <h2 class="card-title">Club de Tiro Casa Grande & Agua Fiel</h2>
+          <p class="card-desc">
+            Feliz 112° Aniversario al Club de Tiro Casa Grande con Miss S.M. Loay I, y distribución de agua pura de manantial San José Fiel a domicilio (Pide al 912 000 659).
+          </p>
+        </div>
+        <div class="card-footer">
+          <span>🎯 112° Aniversario</span>
+          <span>💧 Manantial a tu Hogar</span>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- MODAL LIGHTBOX -->
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img id="modalImg" class="modal-content" src="" alt="Ampliación" />
+    <div id="modalCaption" class="modal-caption"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© <strong>La Voz del Pueblo</strong> — El Programa del Pueblo de Trujillo.</p>
+    <p class="footer-director">Director: Luis Eduardo Leyva Roco • Trujillo, La Libertad, Perú</p>
+  </footer>
+
+  <script>
+    // Detector de ruta automática (funciona si están en la misma carpeta o dentro de /imagenes/)
+    function handleImgError(img) {
+      if (!img.dataset.retried) {
+        img.dataset.retried = "1";
+        img.src = "imagenes/" + img.dataset.file;
+      } else {
+        img.style.display = "none";
+        const fallback = img.nextElementSibling;
+        if (fallback) fallback.style.display = "flex";
+      }
+    }
+
+    // Modal pantalla completa
+    function openModalFromCard(container, captionText) {
+      const img = container.querySelector('img');
+      if (!img || img.style.display === 'none') return;
+
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      const modalCaption = document.getElementById('modalCaption');
+
+      modal.classList.add('active');
+      modalImg.src = img.src;
+      modalCaption.textContent = captionText;
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').classList.remove('active');
+    }
+
+    document.getElementById('modalImg').addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+
+    // Filtros
+    function filterCards(category, e) {
+      const cards = document.querySelectorAll('.news-card');
+      const buttons = document.querySelectorAll('.btn-toggle');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+      e.target.classList.add('active');
+
+      cards.forEach(card => {
+        if (category === 'all') {
+          card.style.display = 'flex';
+        } else if (category === 'noticias') {
+          if (card.dataset.category === 'noticias' || card.dataset.category === 'principal') {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        } else if (category === 'sponsors') {
+          if (card.dataset.category === 'sponsors') {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    // Tecla ESC para cerrar modal
+    document.addEventListener('keydown', function(event) {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    });
+  </script>
+
+</body>
+</html>
